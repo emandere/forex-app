@@ -11,12 +11,12 @@ import { ForexPricesResponse } from '../models/forex-prices';
 })
 export class LiveSessionsComponent implements OnInit {
 
-  test:Observable<ForexPricesResponse>;
+  prices$:Observable<ForexPricesResponse>=null;
   constructor(private forexPricesService:ForexPricesService) { }
   
 
   ngOnInit() {
-    this.test = this.forexPricesService.getForexPrices()
+    this.prices$ = this.forexPricesService.getForexPrices()
   }
 
 }
