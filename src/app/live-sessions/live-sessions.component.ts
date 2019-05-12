@@ -12,6 +12,7 @@ import { ForexPricesResponse } from '../models/forex-prices';
 export class LiveSessionsComponent implements OnInit {
 
   prices$:Observable<ForexPricesResponse>=null;
+  displayedColumns: string[] = ['Instrument','Time','Bid','Ask'];
   constructor(private forexPricesService:ForexPricesService) { }
   
 
