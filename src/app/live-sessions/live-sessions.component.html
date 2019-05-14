@@ -5,17 +5,17 @@
             <th mat-header-cell *matHeaderCellDef> Pair </th>
             <td mat-cell *matCellDef="let price"> {{price.Instrument}} </td>
         </ng-container>
+        <ng-container matColumnDef="Bid">
+            <th mat-header-cell *matHeaderCellDef> Bid </th>
+            <td mat-cell *matCellDef="let price"> <b>{{price.Bid}}</b> </td>
+        </ng-container>
         <ng-container matColumnDef="Time">
             <th mat-header-cell *matHeaderCellDef> Time </th>
             <td mat-cell *matCellDef="let price"> {{price.Time}} </td>
         </ng-container>
-        <ng-container matColumnDef="Bid">
-            <th mat-header-cell *matHeaderCellDef> Bid </th>
-            <td mat-cell *matCellDef="let price"> {{price.Bid}} </td>
-        </ng-container>
-        <ng-container matColumnDef="Ask">
-            <th mat-header-cell *matHeaderCellDef> Ask </th>
-            <td mat-cell *matCellDef="let price"> {{price.Ask}} </td>
+        <ng-container matColumnDef="Indicator">
+            <th mat-header-cell *matHeaderCellDef> Indicator </th>
+            <td mat-cell *matCellDef="let price"> <b>{{price.Indicator}} </b></td>
         </ng-container>
         
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

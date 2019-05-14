@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {ForexPricesService} from '../services/forex-prices.service';
-import { TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs';
-import { ForexPricesResponse } from '../models/forex-prices';
+import { ForexPricesIndicatorService } from '../services/forex-prices-indicator.service';
+import { ForexPricesIndicatorResponse } from '../models/forex-prices-indicator';
 
 @Component({
   selector: 'app-live-sessions',
@@ -11,13 +10,13 @@ import { ForexPricesResponse } from '../models/forex-prices';
 })
 export class LiveSessionsComponent implements OnInit {
 
-  prices$:Observable<ForexPricesResponse>=null;
-  displayedColumns: string[] = ['Instrument','Time','Bid','Ask'];
-  constructor(private forexPricesService:ForexPricesService) { }
+  prices$:Observable<ForexPricesIndicatorResponse>=null;
+  displayedColumns: string[] = ['Instrument','Bid','Time','Indicator'];
+  constructor(private forexPricesIndicatorService:ForexPricesIndicatorService) { }
   
 
   ngOnInit() {
-    this.prices$ = this.forexPricesService.getForexPrices()
+    this.prices$ = this.forexPricesIndicatorService.getForexPricesIndicator()
   }
 
 }
