@@ -11,7 +11,7 @@ export class ForexPricesIndicatorService {
   constructor(private http:HttpClient) { }
 
   getForexPricesIndicator():Observable<ForexPricesIndicatorResponse>{
-    return this.http.get<ForexPricesIndicatorResponse>('http://localhost:5000/api/forexpricesindicator/BelowBollingerBandLower');
+    return this.http.get<ForexPricesIndicatorResponse>('http://localhost:5002/api/forexpricesindicator/BelowBollingerBandLower');
   }
 
   
