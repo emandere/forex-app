@@ -7,11 +7,11 @@ import { ForexPricesIndicatorResponse } from '../models/forex-prices-indicator';
   providedIn: 'root'
 })
 export class ForexPricesIndicatorService {
-
+  private hostname:string = "desktop-7cd2jf6";
   constructor(private http:HttpClient) { }
-
+  
   getForexPricesIndicator():Observable<ForexPricesIndicatorResponse>{
-    return this.http.get<ForexPricesIndicatorResponse>('http://192.168.1.101:124/api/forexpricesindicator/BelowBollingerBandLower');
+    return this.http.get<ForexPricesIndicatorResponse>(`http://${this.hostname}:124/api/forexpricesindicator/BelowBollingerBandLower`);
   }
 
   
