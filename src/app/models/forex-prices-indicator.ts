@@ -8,5 +8,6 @@ export interface Price {
     Instrument: string;
     Time:       string;
     Bid:        number;
+    Ask:        number;
     Indicator:  string;
 }
