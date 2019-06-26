@@ -9,5 +9,10 @@ export interface Price {
     Time:       string;
     Bid:        number;
     Ask:        number;
-    Indicator:  string;
+    Indicator:  number;
+    IndicatorDisplay: string;
+}
+
+export interface Strategy {
+    value: string;
 }

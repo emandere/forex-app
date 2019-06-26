@@ -1,4 +1,16 @@
 <br/>
+<mat-card class="session-card">  
+    <mat-card-content align="center">
+            <mat-form-field>    
+        <mat-select placeholder="Indicator" (selectionChange)="updateTable($event.value)">
+            <mat-option *ngFor="let strategy of strategies" [value]="strategy.value">
+                {{ strategy.value }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>    
+    </mat-card-content>
+</mat-card>
+<br/>
 <div *ngIf="(prices$ | async ) as priceInfo">
     <table mat-table [dataSource]="priceInfo.prices" class="mat-elevation-z8">
         <ng-container matColumnDef="Instrument">
@@ -11,7 +23,7 @@
         </ng-container>
         <ng-container matColumnDef="Indicator">
             <th mat-header-cell *matHeaderCellDef> Indicator </th>
-            <td mat-cell *matCellDef="let price"> <div class ="sessioninfo"><b>{{price.Indicator}} </b></div></td>
+            <td mat-cell *matCellDef="let price"> <div class ="sessioninfo"><b>{{price.IndicatorDisplay}} </b></div></td>
         </ng-container>
         <ng-container matColumnDef="Time">
             <th mat-header-cell *matHeaderCellDef> Time </th>

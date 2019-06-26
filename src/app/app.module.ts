@@ -7,7 +7,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from "@angular/material/icon";
 import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule,MatTableModule, MatListModule } from "@angular/material";
+import { MatButtonModule,MatTableModule, MatListModule, MatSelectModule } from "@angular/material";
 
 
 import { AppComponent } from './app.component';
@@ -30,6 +30,7 @@ import { LiveSessionsComponent } from './live-sessions/live-sessions.component';
     MatCardModule,
     MatIconModule,
     MatTableModule,
+    MatSelectModule,
     MatButtonModule
   ],
   providers: [],

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ForexPricesIndicatorService } from '../services/forex-prices-indicator.service';
-import { ForexPricesIndicatorResponse } from '../models/forex-prices-indicator';
+import { ForexPricesIndicatorResponse, Strategy } from '../models/forex-prices-indicator';
 
 @Component({
   selector: 'app-live-sessions',
@@ -12,11 +12,17 @@ export class LiveSessionsComponent implements OnInit {
 
   prices$:Observable<ForexPricesIndicatorResponse>=null;
   displayedColumns: string[] = ['Instrument','Ask','Indicator','Time'];
+  strategies: Strategy[] =[{value: "RSI"},{value: "BelowBollinger"}];
   constructor(private forexPricesIndicatorService:ForexPricesIndicatorService) { }
   
 
   ngOnInit() {
-    this.prices$ = this.forexPricesIndicatorService.getForexPricesIndicator()
+    this.prices$ = this.forexPricesIndicatorService.getForexPricesIndicator('BelowBollingerBandLower');
+  }
+
+  updateTable(strategy:string)
+  {
+    this.prices$ = this.forexPricesIndicatorService.getForexPricesIndicator(strategy);
   }
 
 }

@@ -10,8 +10,8 @@ export class ForexPricesIndicatorService {
   private hostname:string = "desktop-7cd2jf6:124";
   constructor(private http:HttpClient) { }
   
-  getForexPricesIndicator():Observable<ForexPricesIndicatorResponse>{
-    return this.http.get<ForexPricesIndicatorResponse>(`http://${this.hostname}/api/forexpricesindicator/BelowBollingerBandLower`);
+  getForexPricesIndicator(indicator:string):Observable<ForexPricesIndicatorResponse>{
+    return this.http.get<ForexPricesIndicatorResponse>(`http://${this.hostname}/api/forexpricesindicator/${indicator}`);
   }
 
   
