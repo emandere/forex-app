@@ -11,7 +11,7 @@ import { ForexPricesIndicatorResponse, Strategy } from '../models/forex-prices-i
 export class LiveSessionsComponent implements OnInit {
 
   prices$:Observable<ForexPricesIndicatorResponse>=null;
-  displayedColumns: string[] = ['Instrument','Ask','Indicator','Time'];
+  displayedColumns: string[] = ['Instrument','Ask','Time','Indicator'];
   strategies: Strategy[] =[{value: "RSI"},{value: "BelowBollinger"}];
   constructor(private forexPricesIndicatorService:ForexPricesIndicatorService) { }
   
