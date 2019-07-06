@@ -12,11 +12,13 @@ import { MatButtonModule,MatTableModule, MatListModule, MatSelectModule } from "
 
 import { AppComponent } from './app.component';
 import { LiveSessionsComponent } from './live-sessions/live-sessions.component';
+import { LiveSessionComponent } from './live-session/live-session.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LiveSessionsComponent
+    LiveSessionsComponent,
+    LiveSessionComponent
   ],
   imports: [
     BrowserModule,

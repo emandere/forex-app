@@ -15,25 +15,56 @@
     <table mat-table [dataSource]="priceInfo.prices" class="mat-elevation-z8">
         <ng-container matColumnDef="Instrument">
             <th mat-header-cell *matHeaderCellDef> Pair </th>
-            <td mat-cell *matCellDef="let price"> <div class ="sessioninfo">{{price.Instrument}}</div> </td>
+            <td mat-cell *matCellDef="let price"> <div class ="tableinfo">{{price.Instrument}}</div> </td>
         </ng-container>
         <ng-container matColumnDef="Ask">
             <th mat-header-cell *matHeaderCellDef> Ask </th>
-            <td mat-cell *matCellDef="let price"> <div class ="sessioninfo"> <b>{{price.Ask}}</b> </div> </td>
+            <td mat-cell *matCellDef="let price"> <div class ="tableinfo"> <b>{{price.Ask}}</b> </div> </td>
         </ng-container>
         
         <ng-container matColumnDef="Time">
             <th mat-header-cell *matHeaderCellDef> Time </th>
-            <td mat-cell *matCellDef="let price"> <div class ="sessioninfo"> {{price.Time}} </div></td>
+            <td mat-cell *matCellDef="let price"> <div class ="tableinfo"> {{price.Time}} </div></td>
         </ng-container>
 
         <ng-container matColumnDef="Indicator">
             <th mat-header-cell *matHeaderCellDef> Indicator </th>
-            <td mat-cell *matCellDef="let price"> <div class ="sessioninfo"><b>{{price.IndicatorDisplay}} </b></div></td>
+            <td mat-cell *matCellDef="let price"> <div class ="tableinfo"><b>{{price.IndicatorDisplay}} </b></div></td>
         </ng-container>
        
         
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-</div>    
+</div>
+<br/>
+<mat-card class="livesessioncard">
+        <mat-card-title>liveSessionRSI</mat-card-title>  
+    <mat-card-content>
+            <table  style="width:280px; margin-left:50px">
+                    <tr>
+                        <td><div class ="sessioninfo">Start Date</div></td>
+                        <td></td>
+                        <td><div class ="sessioninfo">Current Date</div></td>
+                    </tr>
+                    <tr>
+                        <td><div class ="sessiondetail">20190706</div></td>
+                        <td></td>
+                        <td><div class ="sessiondetail">20190706</div></td>
+                    </tr>
+                    <br/>
+                    <tr>
+                        <td><div class ="sessioninfo">Balance</div></td>
+                        <td></td>
+                        <td><div class ="sessioninfo">P/L</div></td>
+                    </tr>
+                    <tr>
+                            <td><div class ="sessiondetail">189</div></td>
+                            <td></td>
+                            <td><div class ="sessiondetail">-4.08</div></td>
+                    </tr>
+                   
+                </table>
+   
+    </mat-card-content>
+</mat-card>    

@@ -2,7 +2,7 @@
     max-width: 300px;
   }
 
-  .sessioninfo
+  .tableinfo
   {
       font-family: Inconsolata, monospace;
       font-size: small;
@@ -18,4 +18,21 @@
 table {
   width: 90%;
   max-width: 600px;
+}
+
+.sessioninfo
+            {
+                font-family: Roboto, monospace;
+                font-size: x-small;
+                margin-right: 10px;
+            }
+
+.sessiondetail
+{
+    font-family: Roboto, monospace;
+    font-weight: bold;
+}            
+.livesessioncard {
+  width: 320px;
+  
 }
