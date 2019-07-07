@@ -7,24 +7,28 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from "@angular/material/icon";
 import { MatCardModule } from '@angular/material/card';
+import { MatExpansionModule} from '@angular/material/expansion';
 import { MatButtonModule,MatTableModule, MatListModule, MatSelectModule } from "@angular/material";
 
 
 import { AppComponent } from './app.component';
 import { LiveSessionsComponent } from './live-sessions/live-sessions.component';
 import { LiveSessionComponent } from './live-session/live-session.component';
+import { IndicatorsComponent } from './indicators/indicators.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LiveSessionsComponent,
-    LiveSessionComponent
+    LiveSessionComponent,
+    IndicatorsComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
     RouterModule.forRoot([
+      { path: 'indicators',component: IndicatorsComponent,pathMatch: 'full'},
       { path: '', component: LiveSessionsComponent,pathMatch: 'full' }
     ]),
     MatToolbarModule,
@@ -33,6 +37,8 @@ import { LiveSessionComponent } from './live-session/live-session.component';
     MatIconModule,
     MatTableModule,
     MatSelectModule,
+    MatExpansionModule,
+    MatListModule,
     MatButtonModule
   ],
   providers: [],

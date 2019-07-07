@@ -1,10 +1,38 @@
 <mat-sidenav-container class="example-container">
   <mat-sidenav #drawer mode="side"  mode="over">
-      <mat-toolbar color="primary">
+    <mat-toolbar color="primary">
           <button mat-icon-button (click)="drawer.toggle()">
               <mat-icon>arrow_back</mat-icon>
           </button>
     </mat-toolbar>
+    <mat-nav-list>
+        <mat-accordion>
+            <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <div class="titlenav">Live Sessions</div>
+                        </mat-panel-title>   
+                    </mat-expansion-panel-header>
+                    <a mat-list-item routerLink="/" routerLinkActive="active" (click)="drawer.toggle()" >
+                        <mat-icon mat-list-icon>settings_input_composite</mat-icon>
+                        <h4 mat-line>Manage</h4>
+                    </a>
+            </mat-expansion-panel>
+        </mat-accordion>
+        <mat-accordion>
+            <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <div class="titlenav">Indicators</div>
+                        </mat-panel-title>   
+                    </mat-expansion-panel-header>
+                    <a mat-list-item routerLink="/indicators" routerLinkActive="active" (click)="drawer.toggle()" >
+                        <mat-icon mat-list-icon>settings_input_composite</mat-icon>
+                        <h4 mat-line>View</h4>
+                    </a>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
       <mat-toolbar color="primary">
