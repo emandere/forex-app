@@ -1,3 +1,31 @@
-<p>
-  live-session works!
-</p>
+<br/>
+<mat-card class="livesessioncard">
+        <mat-card-title>{{sessionvalue.Id}}</mat-card-title>  
+    <mat-card-content>
+            <table  style="width:280px; margin-left:50px">
+                    <tr>
+                        <td><div class ="sessioninfo">Start Date</div></td>
+                        <td></td>
+                        <td><div class ="sessioninfo">Current Date</div></td>
+                    </tr>
+                    <tr>
+                        <td><div class ="sessiondetail">{{sessionvalue.StartDate}}</div></td>
+                        <td></td>
+                        <td><div class ="sessiondetail">{{sessionvalue.CurrentTime}}</div></td>
+                    </tr>
+                    <br/>
+                    <tr>
+                        <td><div class ="sessioninfo">Balance</div></td>
+                        <td></td>
+                        <td><div class ="sessioninfo">P/L</div></td>
+                    </tr>
+                    <tr>
+                            <td><div class ="sessiondetail">189</div></td>
+                            <td></td>
+                            <td><div class ="sessiondetail">-4.08</div></td>
+                    </tr>
+                   
+                </table>
+   
+    </mat-card-content>
+</mat-card>    

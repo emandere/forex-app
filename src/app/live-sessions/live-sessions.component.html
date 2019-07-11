@@ -1,31 +1,8 @@
-<br/>
-<mat-card class="livesessioncard">
-        <mat-card-title>liveSessionRSI</mat-card-title>  
-    <mat-card-content>
-            <table  style="width:280px; margin-left:50px">
-                    <tr>
-                        <td><div class ="sessioninfo">Start Date</div></td>
-                        <td></td>
-                        <td><div class ="sessioninfo">Current Date</div></td>
-                    </tr>
-                    <tr>
-                        <td><div class ="sessiondetail">20190706</div></td>
-                        <td></td>
-                        <td><div class ="sessiondetail">20190706</div></td>
-                    </tr>
-                    <br/>
-                    <tr>
-                        <td><div class ="sessioninfo">Balance</div></td>
-                        <td></td>
-                        <td><div class ="sessioninfo">P/L</div></td>
-                    </tr>
-                    <tr>
-                            <td><div class ="sessiondetail">189</div></td>
-                            <td></td>
-                            <td><div class ="sessiondetail">-4.08</div></td>
-                    </tr>
-                   
-                </table>
-   
-    </mat-card-content>
-</mat-card>    
+
+<mat-list>
+    <ng-container *ngFor="let session of (sessions$ | async)">
+      <app-live-session [sessionvalue]="session"></app-live-session>
+    </ng-container>
+</mat-list>
+
+

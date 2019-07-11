@@ -4,13 +4,13 @@
 
   .tableinfo
   {
-      font-family: Inconsolata, monospace;
+      font-family: Roboto, monospace;
       font-size: small;
       
   }
 
   .title{
-    font-family: Inconsolata, monospace;
+    font-family: Roboto, monospace;
     font-weight: 600;
     margin-right: 12px;
 }
