@@ -9,6 +9,6 @@ export class ForexSessionsService {
 
   constructor(private http:HttpClient) { }
   getForexSessions() {
-    return this.http.get<ForexSessions>('http://localhost:5002/api/forexsession')
+    return this.http.get<ForexSessions>('http://localhost:124/api/forexsession')
   }
 }
