@@ -19,13 +19,17 @@ export interface Session {
     elapsedTime:      string;
     beginSessionTime: string;
     endSessionTime:   string;
+    RealizedPL:       number;
+    Balance:          number;
 }
 
 export interface SessionUser {
-    Id:       null;
-    idinfo:   null;
-    Status:   null;
-    Accounts: Accounts;
+    Id:         null;
+    idinfo:     null;
+    Status:     null;
+    Accounts:   Accounts;
+    RealizedPL: number;
+    Balance:    number;
 }
 
 export interface Accounts {
