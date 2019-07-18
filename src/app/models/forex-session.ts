@@ -24,12 +24,16 @@ export interface Session {
 }
 
 export interface SessionUser {
-    Id:         null;
-    idinfo:     null;
-    Status:     null;
-    Accounts:   Accounts;
-    RealizedPL: number;
-    Balance:    number;
+    Id:                         null;
+    idinfo:                     null;
+    Status:                     null;
+    Accounts:                   Accounts;
+    RealizedPL:                 number;
+    Balance:                    number;
+    ClosedTrades:               number;
+    PercentProfitableClosed:    number;
+    OpenTrades:                 number;
+    PercentProfitableOpen:      number;
 }
 
 export interface Accounts {

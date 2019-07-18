@@ -13,7 +13,6 @@
                         <td></td>
                         <td><div class ="sessiondetail">{{sessionvalue.CurrentTime}}</div></td>
                     </tr>
-                    <br/>
                     <tr>
                         <td><div class ="sessioninfo">Balance</div></td>
                         <td></td>
@@ -23,6 +22,26 @@
                             <td><div class ="sessiondetail">{{sessionvalue.Balance}}</div></td>
                             <td></td>
                             <td><div class ="sessiondetail">{{sessionvalue.RealizedPL}}</div></td>
+                    </tr>
+                    <tr>
+                        <td><div class ="sessioninfo">Closed Trades</div></td>
+                        <td></td>
+                        <td><div class ="sessioninfo">% Profitable</div></td>
+                    </tr>
+                    <tr>
+                            <td><div class ="sessiondetail">{{sessionvalue.SessionUser.ClosedTrades}}</div></td>
+                            <td></td>
+                            <td><div class ="sessiondetail">{{sessionvalue.SessionUser.PercentProfitableClosed}}</div></td>
+                    </tr>
+                    <tr>
+                        <td><div class ="sessioninfo">Open Trades</div></td>
+                        <td></td>
+                        <td><div class ="sessioninfo">% Profitable</div></td>
+                    </tr>
+                    <tr>
+                            <td><div class ="sessiondetail">{{sessionvalue.SessionUser.OpenTrades}}</div></td>
+                            <td></td>
+                            <td><div class ="sessiondetail">{{sessionvalue.SessionUser.PercentProfitableOpen}}</div></td>
                     </tr>
                    
                 </table>
