@@ -20,7 +20,7 @@ export interface Session {
     beginSessionTime: string;
     endSessionTime:   string;
     RealizedPL:       number;
-    Balance:          number;
+    Balance:          number;//
 }
 
 export interface SessionUser {
