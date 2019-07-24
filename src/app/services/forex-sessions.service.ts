@@ -6,9 +6,9 @@ import {ForexSessions} from '../models/forex-session';
   providedIn: 'root'
 })
 export class ForexSessionsService {
-
+  private hostname:string = "desktop-7cd2jf6:124";
   constructor(private http:HttpClient) { }
   getForexSessions() {
-    return this.http.get<ForexSessions>('http://localhost:124/api/forexsession')
+    return this.http.get<ForexSessions>(`http://${this.hostname}/api/forexsession`)
   }
 }
