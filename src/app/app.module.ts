@@ -15,13 +15,15 @@ import { AppComponent } from './app.component';
 import { LiveSessionsComponent } from './live-sessions/live-sessions.component';
 import { LiveSessionComponent } from './live-session/live-session.component';
 import { IndicatorsComponent } from './indicators/indicators.component';
+import { SessionAnalysisComponent } from './session-analysis/session-analysis.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LiveSessionsComponent,
     LiveSessionComponent,
-    IndicatorsComponent
+    IndicatorsComponent,
+    SessionAnalysisComponent
   ],
   imports: [
     BrowserModule,
@@ -29,6 +31,7 @@ import { IndicatorsComponent } from './indicators/indicators.component';
     HttpClientModule,
     RouterModule.forRoot([
       { path: 'indicators',component: IndicatorsComponent,pathMatch: 'full'},
+      { path: 'session-analysis',component: SessionAnalysisComponent,pathMatch: 'full'},
       { path: '', component: LiveSessionsComponent,pathMatch: 'full' }
     ]),
     MatToolbarModule,
