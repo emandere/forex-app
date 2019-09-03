@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import * as fromState from '../reducers';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-session-analysis',
@@ -7,9 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SessionAnalysisComponent implements OnInit {
 
-  constructor() { }
+  liveSessionId$:Observable<string>;
+  constructor(private store: Store<fromState.State>) { }
+
 
   ngOnInit() {
+    this.liveSessionId$ = this.store.select(fromState.getLiveSessionForAnalysis);
   }
 
 }

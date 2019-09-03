@@ -16,6 +16,8 @@ import { LiveSessionsComponent } from './live-sessions/live-sessions.component';
 import { LiveSessionComponent } from './live-session/live-session.component';
 import { IndicatorsComponent } from './indicators/indicators.component';
 import { SessionAnalysisComponent } from './session-analysis/session-analysis.component';
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './reducers';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,14 @@ import { SessionAnalysisComponent } from './session-analysis/session-analysis.co
     MatSelectModule,
     MatExpansionModule,
     MatListModule,
-    MatButtonModule
+    MatButtonModule,
+    StoreModule.forRoot(reducers, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true
+      }
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

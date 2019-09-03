@@ -125,5 +125,8 @@
       }
     }
   },
-  "defaultProject": "forex-app"
+  "defaultProject": "forex-app",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }
