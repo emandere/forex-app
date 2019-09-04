@@ -4,7 +4,7 @@ export interface State {
 }
 
 export const initialState: State = {
-    liveSessionForAnalysis:""
+    liveSessionForAnalysis:"ddd"
 }
 
 export function reducer(state = initialState, action: LiveSessionActions): State {
