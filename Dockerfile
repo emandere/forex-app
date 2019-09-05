@@ -1,4 +1,4 @@
-FROM emandere/forex-experiment-base AS builder
+FROM emandere/forexapp-base AS builder
 WORKDIR /app
 
 COPY . ./
