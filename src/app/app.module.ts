@@ -9,6 +9,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule} from '@angular/material/expansion';
 import { MatButtonModule,MatTableModule, MatListModule, MatSelectModule } from "@angular/material";
+import { Ng2GoogleChartsModule } from 'ng2-google-charts';
 
 
 import { AppComponent } from './app.component';
@@ -45,6 +46,7 @@ import { reducers, metaReducers } from './reducers';
     MatExpansionModule,
     MatListModule,
     MatButtonModule,
+    Ng2GoogleChartsModule,
     StoreModule.forRoot(reducers, {
       metaReducers,
       runtimeChecks: {

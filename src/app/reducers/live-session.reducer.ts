@@ -1,10 +1,11 @@
 import {LiveSessionActions, LiveSessionActionTypes, SelectSessionForAnalysis} from '../actions/live-sessions.actions'
+import { Session } from '../models/forex-session';
 export interface State {
-    liveSessionForAnalysis:string
+    liveSessionForAnalysis:Session
 }
 
 export const initialState: State = {
-    liveSessionForAnalysis:"ddd"
+    liveSessionForAnalysis:null
 }
 
 export function reducer(state = initialState, action: LiveSessionActions): State {

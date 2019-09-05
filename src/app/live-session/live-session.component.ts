@@ -17,7 +17,7 @@ export class LiveSessionComponent implements OnInit {
 
   SetAnalysis() {
     
-    this.store.dispatch(new liveSessionActions.SelectSessionForAnalysis(this.sessionvalue.Id)); 
+    this.store.dispatch(new liveSessionActions.SelectSessionForAnalysis(this.sessionvalue)); 
      
   }
 

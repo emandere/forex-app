@@ -1,3 +1,12 @@
-<p>
-  {{liveSessionId$ | async}} selected
-</p>
+<br/>
+<mat-card  class="session-card">
+  <mat-card-content>
+      <google-chart [data]="lengthHistGoogleChart"></google-chart>
+  </mat-card-content>
+</mat-card>
+<br/>
+<mat-card  class="session-card">
+  <mat-card-content>
+      <google-chart [data]="pLByPairHistogramChart"></google-chart>
+  </mat-card-content>
+</mat-card>
