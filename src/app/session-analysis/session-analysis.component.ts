@@ -115,7 +115,7 @@ export class SessionAnalysisComponent implements OnInit {
                       .Accounts
                       .Primary
                       .BalanceHistory
-                      .map((balance)=>[balance.Date,balance.Amount]);
+                      .map((balance)=>[new Date(balance.Date),balance.Amount]);
 
     dataBalanceHistory.unshift(["Date","Balance"]);
     this.balanceHistoryChart =
