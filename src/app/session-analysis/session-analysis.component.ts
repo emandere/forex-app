@@ -17,6 +17,7 @@ export class SessionAnalysisComponent implements OnInit {
   liveSession$:Observable<Session>;
   public lengthHistGoogleChart:     GoogleChartInterface = null;
   public pLByPairHistogramChart:     GoogleChartInterface = null;
+  public balanceHistoryChart:     GoogleChartInterface = null;
   constructor(private store: Store<fromState.State>) { }
 
 
@@ -58,6 +59,7 @@ export class SessionAnalysisComponent implements OnInit {
   setupCharts(sessionInfo:Session) {
     let dataTradeLength:Array<Array<any>>=null;
     let dataPLByPair:Array<Array<any>>=null;
+    let dataBalanceHistory:Array<Array<any>>=null;
 
     dataTradeLength = sessionInfo
                     .SessionUser
@@ -102,13 +104,44 @@ export class SessionAnalysisComponent implements OnInit {
         {
           title:  "PL vs Pair",
           legend: { position: 'none' },
-      
-          
         },
         bars: 'horizontal',
         height: 400
       }
     };
+
+    dataBalanceHistory = sessionInfo
+                      .SessionUser
+                      .Accounts
+                      .Primary
+                      .BalanceHistory
+                      .map((balance)=>[balance.Date,balance.Amount]);
+
+    dataBalanceHistory.unshift(["Date","Balance"]);
+    this.balanceHistoryChart =
+    {
+      chartType:'LineChart',
+      dataTable:dataBalanceHistory,
+      
+      options : {
+        title: "Balance History",
+        legend: { position: 'none' },
+        hAxis:
+        {
+          title:"Date"
+        }, 
+        series: 
+        {
+          1: {curveType: 'function'}
+        },
+        vAxis:
+        {
+          title:"Balance"
+        },
+        height: 400
+      }
+    }
+
 
   }
 
