@@ -87,10 +87,10 @@ export class SessionAnalysisComponent implements OnInit {
       dataTable:  dataPL,
       options: 
       {
-        title:  "PL of trades",
+        title:  "Histogram of PL for closed trades",
         legend: { position: 'none' },
-        hAxis:  {  title:"Number of Trades"},
-        vAxis:  { title:"PL (Dollars)"},
+        hAxis:  {  title:"PL (Dollars)"},
+        vAxis:  { title:"Number of trades"},
         height: 400
       }
     };
