@@ -1,6 +1,12 @@
 <br/>
 <mat-card  class="session-card">
   <mat-card-content>
+      <google-chart [data]="plHistGoogleChart"></google-chart>
+  </mat-card-content>
+</mat-card>
+<br/>
+<mat-card  class="session-card">
+  <mat-card-content>
       <google-chart [data]="lengthHistGoogleChart"></google-chart>
   </mat-card-content>
 </mat-card>
@@ -14,5 +20,11 @@
 <mat-card  class="session-card">
   <mat-card-content>
       <google-chart [data]="balanceHistoryChart"></google-chart>
+  </mat-card-content>
+</mat-card>
+<br/>
+<mat-card  class="session-card">
+  <mat-card-content>
+      <google-chart [data]="countPLByPairChart"></google-chart>
   </mat-card-content>
 </mat-card>

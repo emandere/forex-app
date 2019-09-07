@@ -15,9 +15,11 @@ import { Session, Trade } from '../models/forex-session';
 export class SessionAnalysisComponent implements OnInit {
 
   liveSession$:Observable<Session>;
+  public plHistGoogleChart:     GoogleChartInterface = null;
   public lengthHistGoogleChart:     GoogleChartInterface = null;
   public pLByPairHistogramChart:     GoogleChartInterface = null;
   public balanceHistoryChart:     GoogleChartInterface = null;
+  public countPLByPairChart:     GoogleChartInterface = null;
   constructor(private store: Store<fromState.State>) { }
 
 
@@ -50,6 +52,12 @@ export class SessionAnalysisComponent implements OnInit {
                     .reduce((acc,pl)=>acc+pl);
   }
 
+  countPL(pair:string,trades:Trade[]):number
+  {
+      return trades.filter(trade=>trade.Pair==pair)
+                   .length;                  
+  }
+
   uniquePairs(trades:Trade[]):string[]
   {
      let setvalues = new Set(trades.map(trade=>trade.Pair)).values();
@@ -57,9 +65,36 @@ export class SessionAnalysisComponent implements OnInit {
   }
   
   setupCharts(sessionInfo:Session) {
+    let dataPL:Array<Array<any>>=null;
     let dataTradeLength:Array<Array<any>>=null;
     let dataPLByPair:Array<Array<any>>=null;
     let dataBalanceHistory:Array<Array<any>>=null;
+    let dataCountByPair:Array<Array<any>>=null;
+
+    dataPL = sessionInfo
+                    .SessionUser
+                    .Accounts
+                    .Primary
+                    .ClosedTrades
+                    .map((trade)=>[trade.Pair+trade.OpenDate,trade.PL]);
+                    
+    dataPL.unshift(["Trade","PL"]);
+                
+
+    this.plHistGoogleChart=
+    {
+      chartType:  "Histogram",
+      dataTable:  dataPL,
+      options: 
+      {
+        title:  "PL of trades",
+        legend: { position: 'none' },
+        hAxis:  {  title:"Number of Trades"},
+        vAxis:  { title:"PL (Dollars)"},
+        height: 400
+      }
+    };
+    
 
     dataTradeLength = sessionInfo
                     .SessionUser
@@ -120,12 +155,15 @@ export class SessionAnalysisComponent implements OnInit {
     dataBalanceHistory.unshift(["Date","Balance"]);
     this.balanceHistoryChart =
     {
-      chartType:'LineChart',
+      chartType:'Line',
       dataTable:dataBalanceHistory,
       
       options : {
-        title: "Balance History",
-        legend: { position: 'none' },
+        chart:
+        {
+          title: "Balance History",
+          legend: { position: 'none' }
+        },
         hAxis:
         {
           title:"Date"
@@ -142,7 +180,25 @@ export class SessionAnalysisComponent implements OnInit {
       }
     }
 
-
+    dataCountByPair = this.uniquePairs(closedTrades)
+                    .map((pair)=>[pair,this.countPL(pair,closedTrades)]);
+    dataCountByPair.unshift(["Pair","Count"]);                
+    this.countPLByPairChart=
+    {
+      chartType:  "Bar",
+      dataTable:  dataCountByPair,
+      options: 
+      {
+        chart: 
+        {
+          title:  "Trades by Pair",
+          legend: { position: 'none' },
+        },
+        bars: 'horizontal',
+        height: 400
+      }
+    };
+                
   }
 
 }
