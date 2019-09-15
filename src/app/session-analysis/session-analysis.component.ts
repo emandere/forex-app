@@ -45,6 +45,7 @@ export class SessionAnalysisComponent implements OnInit {
           })
         ).subscribe(
           sess=>{
+                this.liveSession = sess;
                 this.setupCharts(sess);
           }
         )
