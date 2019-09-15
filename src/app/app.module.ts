@@ -34,7 +34,7 @@ import { reducers, metaReducers } from './reducers';
     HttpClientModule,
     RouterModule.forRoot([
       { path: 'indicators',component: IndicatorsComponent,pathMatch: 'full'},
-      { path: 'session-analysis',component: SessionAnalysisComponent,pathMatch: 'full'},
+      { path: 'session-analysis/:id',component: SessionAnalysisComponent},
       { path: '', component: LiveSessionsComponent,pathMatch: 'full' }
     ]),
     MatToolbarModule,

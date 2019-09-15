@@ -48,7 +48,7 @@
    
     </mat-card-content>
     <mat-card-actions>
-            <button mat-button routerLink='/session-analysis' routerLinkActive="active" (click)="SetAnalysis()">
+            <button mat-button routerLink='/session-analysis/{{sessionvalue.Id}}' routerLinkActive="active" (click)="SetAnalysis()">
                 <div class ="sessiondetail">Analysis</div>
             </button>
             <button mat-button><div class ="sessiondetail">Stage</div></button>

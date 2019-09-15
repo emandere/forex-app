@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {ForexSessions} from '../models/forex-session';
+import {ForexSessions, Session} from '../models/forex-session';
 
 @Injectable({
   providedIn: 'root'
@@ -10,5 +10,9 @@ export class ForexSessionsService {
   constructor(private http:HttpClient) { }
   getForexSessions() {
     return this.http.get<ForexSessions>(`http://${this.hostname}/api/forexsession`)
+  }
+
+  getForexSession(id:string) {
+    return this.http.get<ForexSessions>(`http://${this.hostname}/api/forexsession/${id}`)
   }
 }

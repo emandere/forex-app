@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { GoogleChartInterface } from 'ng2-google-charts/google-charts-interfaces';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import * as fromState from '../reducers';
 import { Session, Trade } from '../models/forex-session';
+import { ActivatedRoute } from '@angular/router';
+import { switchMap, map } from 'rxjs/operators';
+import { ForexSessionsService } from '../services/forex-sessions.service';
+
 
 
 
@@ -15,21 +19,35 @@ import { Session, Trade } from '../models/forex-session';
 export class SessionAnalysisComponent implements OnInit {
 
   liveSession$:Observable<Session>;
+  liveSession:Session;
   public plHistGoogleChart:     GoogleChartInterface = null;
   public lengthHistGoogleChart:     GoogleChartInterface = null;
   public pLByPairHistogramChart:     GoogleChartInterface = null;
   public balanceHistoryChart:     GoogleChartInterface = null;
   public countPLByPairChart:     GoogleChartInterface = null;
-  constructor(private store: Store<fromState.State>) { }
+  constructor(private store: Store<fromState.State>,
+              private route: ActivatedRoute,
+              private forexSessionService:ForexSessionsService) { }
 
 
   ngOnInit() {
+    
     this.liveSession$ = this.store.select(fromState.getLiveSessionForAnalysis);
-    this.liveSession$.subscribe(
-      sess=>{
-        this.setupCharts(sess);
-      }
-    )
+    this.liveSession$
+        .pipe(
+          switchMap(session =>{
+            if(session==null){
+                return this.forexSessionService.getForexSession(this.route.snapshot.params.id)
+                                               .pipe(map(sessions => sessions.sessions[0]))
+            } else {
+                return of(session);
+            }
+          })
+        ).subscribe(
+          sess=>{
+                this.setupCharts(sess);
+          }
+        )
     
   }
 
