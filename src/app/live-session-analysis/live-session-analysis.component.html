@@ -1,0 +1,53 @@
+<br/>
+<mat-card class="livesessioncard">
+        <mat-card-subtitle>{{sessionvalue.Id}}</mat-card-subtitle>  
+    <mat-card-content>
+            <table  style="width:280px; margin-left:50px">
+                    <tr>
+                        <td><div class ="sessioninfo">Start Date</div></td>
+                        <td></td>
+                        <td><div class ="sessioninfo">Current Date</div></td>
+                    </tr>
+                    <tr>
+                        <td><div class ="sessiondetail">{{sessionvalue.StartDate}}</div></td>
+                        <td></td>
+                        <td><div class ="sessiondetail">{{sessionvalue.CurrentTime}}</div></td>
+                    </tr>
+                    <tr>
+                        <td><div class ="sessioninfo">Balance</div></td>
+                        <td></td>
+                        <td><div class ="sessioninfo">P/L</div></td>
+                    </tr>
+                    <tr>
+                            <td><div class ="sessiondetail">{{sessionvalue.Balance}}</div></td>
+                            <td></td>
+                            <td><div class ="sessiondetail">{{sessionvalue.RealizedPL}}</div></td>
+                    </tr>
+                    <tr>
+                        <td><div class ="sessioninfo">Closed Trades</div></td>
+                        <td></td>
+                        <td><div class ="sessioninfo">% Profitable</div></td>
+                    </tr>
+                    <tr>
+                            <td><div class ="sessiondetail">{{sessionvalue.SessionUser.ClosedTrades}}</div></td>
+                            <td></td>
+                            <td><div class ="sessiondetail">{{sessionvalue.SessionUser.PercentProfitableClosed}}</div></td>
+                    </tr>
+                    <tr>
+                        <td><div class ="sessioninfo">Open Trades</div></td>
+                        <td></td>
+                        <td><div class ="sessioninfo">% Profitable</div></td>
+                    </tr>
+                    <tr>
+                            <td><div class ="sessiondetail">{{sessionvalue.SessionUser.OpenTrades}}</div></td>
+                            <td></td>
+                            <td><div class ="sessiondetail">{{sessionvalue.SessionUser.PercentProfitableOpen}}</div></td>
+                    </tr>
+                   
+                </table>
+   
+    </mat-card-content>
+    <mat-card-actions>
+            <button mat-button><div class ="sessiondetail">Filter Session</div></button>
+    </mat-card-actions>
+</mat-card>    

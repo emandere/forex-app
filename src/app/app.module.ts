@@ -19,6 +19,7 @@ import { IndicatorsComponent } from './indicators/indicators.component';
 import { SessionAnalysisComponent } from './session-analysis/session-analysis.component';
 import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
+import { LiveSessionAnalysisComponent } from './live-session-analysis/live-session-analysis.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { reducers, metaReducers } from './reducers';
     LiveSessionsComponent,
     LiveSessionComponent,
     IndicatorsComponent,
-    SessionAnalysisComponent
+    SessionAnalysisComponent,
+    LiveSessionAnalysisComponent
   ],
   imports: [
     BrowserModule,
