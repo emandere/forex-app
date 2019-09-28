@@ -9,6 +9,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule} from '@angular/material/expansion';
 import { MatButtonModule,MatTableModule, MatListModule, MatSelectModule } from "@angular/material";
+import { MatDialogModule}  from '@angular/material/dialog';
 import { Ng2GoogleChartsModule } from 'ng2-google-charts';
 
 
@@ -20,6 +21,7 @@ import { SessionAnalysisComponent } from './session-analysis/session-analysis.co
 import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
 import { LiveSessionAnalysisComponent } from './live-session-analysis/live-session-analysis.component';
+import { FilterSessionInfoComponent } from './filter-session-info/filter-session-info.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { LiveSessionAnalysisComponent } from './live-session-analysis/live-sessi
     LiveSessionComponent,
     IndicatorsComponent,
     SessionAnalysisComponent,
-    LiveSessionAnalysisComponent
+    LiveSessionAnalysisComponent,
+    FilterSessionInfoComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -48,6 +52,7 @@ import { LiveSessionAnalysisComponent } from './live-session-analysis/live-sessi
     MatExpansionModule,
     MatListModule,
     MatButtonModule,
+    MatDialogModule,
     Ng2GoogleChartsModule,
     StoreModule.forRoot(reducers, {
       metaReducers,
@@ -57,6 +62,7 @@ import { LiveSessionAnalysisComponent } from './live-session-analysis/live-sessi
       }
     })
   ],
+  entryComponents: [FilterSessionInfoComponent],
   providers: [],
   bootstrap: [AppComponent]
 })
