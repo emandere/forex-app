@@ -11,6 +11,8 @@ import { MatExpansionModule} from '@angular/material/expansion';
 import { MatButtonModule,MatTableModule, MatListModule, MatSelectModule } from "@angular/material";
 import { MatDialogModule}  from '@angular/material/dialog';
 import { Ng2GoogleChartsModule } from 'ng2-google-charts';
+import { FormsModule } from '@angular/forms';
+
 
 
 import { AppComponent } from './app.component';
@@ -43,6 +45,7 @@ import { FilterSessionInfoComponent } from './filter-session-info/filter-session
       { path: 'session-analysis/:id',component: SessionAnalysisComponent},
       { path: '', component: LiveSessionsComponent,pathMatch: 'full' }
     ]),
+    FormsModule,
     MatToolbarModule,
     MatSidenavModule,
     MatCardModule,
