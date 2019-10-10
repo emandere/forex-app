@@ -11,7 +11,7 @@ import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 export class FilterSessionInfoComponent  {
   pairs: string[] =['AUDUSD','GBPUSD'];
   constructor(public dialogRef: MatDialogRef<FilterSessionInfoComponent>,
-    @Inject(MAT_DIALOG_DATA) data: string)
+     @Inject(MAT_DIALOG_DATA) public data: string)
      { }
    onNoClick(): void {
       this.dialogRef.close();
