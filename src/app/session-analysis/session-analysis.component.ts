@@ -20,6 +20,7 @@ export class SessionAnalysisComponent implements OnInit {
 
   liveSession$:Observable<Session>;
   liveSession:Session;
+  filterPair:string;
   public plHistGoogleChart:     GoogleChartInterface = null;
   public lengthHistGoogleChart:     GoogleChartInterface = null;
   public pLByPairHistogramChart:     GoogleChartInterface = null;
@@ -46,6 +47,9 @@ export class SessionAnalysisComponent implements OnInit {
         ).subscribe(
           sess=>{
                 this.liveSession = sess;
+                this.store.select(fromState.getFilterSessionPair).subscribe(
+                  pair => console.log(pair)
+                )
                 this.setupCharts(sess);
           }
         )

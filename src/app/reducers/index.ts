@@ -19,4 +19,6 @@ export const reducers: ActionReducerMap<State> = {
 
 export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];
 export const getLiveSessionForAnalysis = (state: State) => state.liveSessions.liveSessionForAnalysis;
+export const getFilterSessionPair = (state: State) => state.liveSessions.filterSessionPair;
+
 
