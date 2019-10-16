@@ -7,7 +7,7 @@ export interface State {
 
 export const initialState: State = {
     liveSessionForAnalysis:null,
-    filterSessionPair:null
+    filterSessionPair:'AUDUSD'
 }
 
 export function reducer(state = initialState, action: LiveSessionActions): State {
@@ -34,3 +34,4 @@ function handleFilterSessionByPair(state: State, action:FilterSessionByPair ): S
     filterSessionPair: action.payload
   };
 }
+

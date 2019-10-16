@@ -5,8 +5,9 @@ import { Observable, of } from 'rxjs';
 import * as fromState from '../reducers';
 import { Session, Trade } from '../models/forex-session';
 import { ActivatedRoute } from '@angular/router';
-import { switchMap, map } from 'rxjs/operators';
+import { switchMap, map, flatMap, take } from 'rxjs/operators';
 import { ForexSessionsService } from '../services/forex-sessions.service';
+import * as liveSessionActions from '../actions/live-sessions.actions';
 
 
 
@@ -19,6 +20,7 @@ import { ForexSessionsService } from '../services/forex-sessions.service';
 export class SessionAnalysisComponent implements OnInit {
 
   liveSession$:Observable<Session>;
+  pair$:Observable<string>;
   liveSession:Session;
   filterPair:string;
   public plHistGoogleChart:     GoogleChartInterface = null;
@@ -32,28 +34,42 @@ export class SessionAnalysisComponent implements OnInit {
 
 
   ngOnInit() {
-    
+
+    this.pair$ = this.store.select(fromState.getFilterSessionPair);
     this.liveSession$ = this.store.select(fromState.getLiveSessionForAnalysis);
     this.liveSession$
         .pipe(
           switchMap(session =>{
             if(session==null){
+                this.store.dispatch(new liveSessionActions.LoadLiveSession(this.route.snapshot.params.id));
                 return this.forexSessionService.getForexSession(this.route.snapshot.params.id)
                                                .pipe(map(sessions => sessions.sessions[0]))
-            } else {
-                return of(session);
-            }
-          })
-        ).subscribe(
+
+            } 
+            return this.store.select(fromState.getLiveSessionForAnalysis);
+          }),
+          flatMap(session => this.applyFilter(session,this.pair$))
+        )
+        .subscribe(
           sess=>{
                 this.liveSession = sess;
-                this.store.select(fromState.getFilterSessionPair).subscribe(
-                  pair => console.log(pair)
-                )
+                console.log(sess.ExperimentId)
                 this.setupCharts(sess);
           }
         )
     
+  }
+
+  applyFilter(sess:Session,filterpair$:Observable<string>):Observable<Session>
+  {
+    return filterpair$.pipe(
+      map(pair => this.applyFilterOrig(sess,pair))
+    );
+  }
+
+   applyFilterOrig(sess:Session,pair:string)
+  {
+    return {...sess,ExperimentId:pair}
   }
 
   dateDiff(trade:Trade):number
