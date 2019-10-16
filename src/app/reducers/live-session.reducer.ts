@@ -7,7 +7,7 @@ export interface State {
 
 export const initialState: State = {
     liveSessionForAnalysis:null,
-    filterSessionPair:'AUDUSD'
+    filterSessionPair:'ALL'
 }
 
 export function reducer(state = initialState, action: LiveSessionActions): State {

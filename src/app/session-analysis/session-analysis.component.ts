@@ -47,30 +47,23 @@ export class SessionAnalysisComponent implements OnInit {
 
             } 
             return this.store.select(fromState.getLiveSessionForAnalysis);
-          }),
-          flatMap(session => this.applyFilter(session,this.pair$))
+          })
         )
         .subscribe(
           sess=>{
+                
                 this.liveSession = sess;
                 console.log(sess.ExperimentId)
-                this.setupCharts(sess);
+                this.pair$.subscribe(
+                  pair=>{
+                      this.setupCharts(sess,pair)
+                    })
           }
         )
     
   }
 
-  applyFilter(sess:Session,filterpair$:Observable<string>):Observable<Session>
-  {
-    return filterpair$.pipe(
-      map(pair => this.applyFilterOrig(sess,pair))
-    );
-  }
 
-   applyFilterOrig(sess:Session,pair:string)
-  {
-    return {...sess,ExperimentId:pair}
-  }
 
   dateDiff(trade:Trade):number
   {
@@ -103,20 +96,32 @@ export class SessionAnalysisComponent implements OnInit {
      return Array.from(setvalues);
   }
   
-  setupCharts(sessionInfo:Session) {
+  setupCharts(sessionInfo:Session,pair:string) {
     let dataPL:Array<Array<any>>=null;
     let dataTradeLength:Array<Array<any>>=null;
     let dataPLByPair:Array<Array<any>>=null;
     let dataBalanceHistory:Array<Array<any>>=null;
     let dataCountByPair:Array<Array<any>>=null;
-
-    dataPL = sessionInfo
-                    .SessionUser
-                    .Accounts
-                    .Primary
-                    .ClosedTrades
-                    .map((trade)=>[trade.Pair+trade.OpenDate,trade.PL]);
-                    
+    let trades:Trade[] = null;
+    if(pair!='ALL')
+    {
+        trades = sessionInfo
+                .SessionUser
+                .Accounts
+                .Primary
+                .ClosedTrades
+                .filter(x => x.Pair==pair)
+    }
+    else
+    {
+      trades = sessionInfo
+              .SessionUser
+              .Accounts
+              .Primary
+              .ClosedTrades
+    }
+    
+    dataPL = trades.map((trade)=>[trade.Pair+trade.OpenDate,trade.PL]);         
     dataPL.unshift(["Trade","PL"]);
                 
 
@@ -135,11 +140,7 @@ export class SessionAnalysisComponent implements OnInit {
     };
     
 
-    dataTradeLength = sessionInfo
-                    .SessionUser
-                    .Accounts
-                    .Primary
-                    .ClosedTrades
+    dataTradeLength = trades
                     .map((trade)=>[trade.Pair+trade.OpenDate,this.dateDiff(trade)]);
     dataTradeLength.unshift(["Trade","Days"]);
 
@@ -157,14 +158,14 @@ export class SessionAnalysisComponent implements OnInit {
       }
     };
 
-    let closedTrades =sessionInfo
+    /*let closedTrades =sessionInfo
                       .SessionUser
                       .Accounts
                       .Primary
-                      .ClosedTrades;
+                      .ClosedTrades;*/
 
-    dataPLByPair = this.uniquePairs(closedTrades)
-                    .map((pair)=>[pair,this.sumPL(pair,closedTrades)]);
+    dataPLByPair = this.uniquePairs(trades)
+                    .map((pair)=>[pair,this.sumPL(pair,trades)]);
 
     dataPLByPair.unshift(["Pair","PL"]);
 
@@ -219,8 +220,8 @@ export class SessionAnalysisComponent implements OnInit {
       }
     }
 
-    dataCountByPair = this.uniquePairs(closedTrades)
-                    .map((pair)=>[pair,this.countPL(pair,closedTrades)]);
+    dataCountByPair = this.uniquePairs(trades)
+                    .map((pair)=>[pair,this.countPL(pair,trades)]);
     dataCountByPair.unshift(["Pair","Count"]);                
     this.countPLByPairChart=
     {
