@@ -95,8 +95,159 @@ export class SessionAnalysisComponent implements OnInit {
      let setvalues = new Set(trades.map(trade=>trade.Pair)).values();
      return Array.from(setvalues);
   }
+
+  setupCharts(sessionInfo:Session,pair:string){
+    
+    if(pair=='ALL') {
+        this.setupChartsNoFilter(sessionInfo);
+    } else {
+        this.setupChartsFilter(sessionInfo,pair);
+    }
+    
+
+  }
+
   
-  setupCharts(sessionInfo:Session,pair:string) {
+  
+
+  setupChartsNoFilter(sessionInfo:Session) {
+    let dataPLByPair:Array<Array<any>>=null;
+    let dataCountByPair:Array<Array<any>>=null;
+    let trades:Trade[] = sessionInfo
+                          .SessionUser
+                          .Accounts
+                          .Primary
+                          .ClosedTrades;
+    let balanceHistory =  sessionInfo
+                          .SessionUser
+                          .Accounts
+                          .Primary
+                          .BalanceHistory
+                          .map((balance)=>[new Date(balance.Date),balance.Amount]);
+
+    this.createSharedTradeCharts(trades);
+    this.createBalanceHistoryChart(balanceHistory);
+    dataPLByPair = this.uniquePairs(trades)
+                    .map((pair)=>[pair,this.sumPL(pair,trades)]);
+
+    dataPLByPair.unshift(["Pair","PL"]);
+
+    this.pLByPairHistogramChart=
+    {
+      chartType:  "Bar",
+      dataTable:  dataPLByPair,
+      options: 
+      {
+        chart: { title:  "PL vs Pair", legend: { position: 'none' }},
+        bars: 'horizontal',
+        height: 400
+      }
+    };
+
+    
+    dataCountByPair = this.uniquePairs(trades)
+                    .map((pair)=>[pair,this.countPL(pair,trades)]);
+    dataCountByPair.unshift(["Pair","Count"]);                
+    this.countPLByPairChart=
+    {
+      chartType:  "Bar",
+      dataTable:  dataCountByPair,
+      options: 
+      {
+        chart: 
+        {
+          title:  "Trades by Pair",
+          legend: { position: 'none' },
+        },
+        bars: 'horizontal',
+        height: 400
+      }
+    };
+
+  }
+
+  setupChartsFilter(sessionInfo:Session,pair:string) {
+    this.pLByPairHistogramChart = null;
+    this.countPLByPairChart = null;
+    let trades:Trade[] = sessionInfo
+                          .SessionUser
+                          .Accounts
+                          .Primary
+                          .ClosedTrades
+                          .filter(x=>x.Pair==pair);
+    let balanceHistory =  sessionInfo
+                          .SessionUser
+                          .Accounts
+                          .Primary
+                          .BalanceHistory
+                          .map((balance)=>[new Date(balance.Date),balance.Amount]);
+
+    this.createSharedTradeCharts(trades);
+    this.createBalanceHistoryChart(balanceHistory);
+
+  }
+
+  createSharedTradeCharts(trades:Trade[]) {
+    let dataPL:Array<Array<any>>=null;
+    let dataTradeLength:Array<Array<any>>=null;
+
+    dataPL = trades.map((trade)=>[trade.Pair+trade.OpenDate,trade.PL]);         
+    dataPL.unshift(["Trade","PL"]);
+    this.plHistGoogleChart=
+    {
+      chartType:  "Histogram",
+      dataTable:  dataPL,
+      options: 
+      {
+        title:  "Histogram of PL for closed trades",
+        legend: { position: 'none' },
+        hAxis:  {  title:"PL (Dollars)"},
+        vAxis:  { title:"Number of trades"},
+        height: 400
+      }
+    };
+
+    dataTradeLength = trades
+    .map((trade)=>[trade.Pair+trade.OpenDate,this.dateDiff(trade)]);
+    dataTradeLength.unshift(["Trade","Days"]);
+
+    this.lengthHistGoogleChart=
+    {
+      chartType:  "Histogram",
+      dataTable:  dataTradeLength,
+      options: 
+      {
+        title:  "Duration of trades",
+        legend: { position: 'none' },
+        hAxis:  {  title:"Number of Trades"},
+        vAxis:  { title:"Duration (days)"},
+        height: 400
+      }
+    };
+
+    
+  }
+
+  createBalanceHistoryChart(dataBalanceHistory:any[][]) {
+    dataBalanceHistory.unshift(["Date","Balance"]);
+    this.balanceHistoryChart =
+    {
+      chartType:'Line',
+      dataTable:dataBalanceHistory,
+      options : 
+      {
+        chart: { title: "Balance History", legend: { position: 'none' } },
+        hAxis: { title:"Date" }, 
+        series:{ 1: {curveType: 'function'} },
+        vAxis: { title:"Balance"},
+        height: 400
+      }
+    }
+  }
+  
+  
+
+  setupChartsFilterOld(sessionInfo:Session,pair:string) {
     let dataPL:Array<Array<any>>=null;
     let dataTradeLength:Array<Array<any>>=null;
     let dataPLByPair:Array<Array<any>>=null;
