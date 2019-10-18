@@ -9,7 +9,7 @@ import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
   styleUrls: ['./filter-session-info.component.css']
 })
 export class FilterSessionInfoComponent  {
-  pairs: string[] =['ALL','AUDUSD','GBPUSD'];
+  pairs: string[] =['ALL','AUDUSD','EURUSD','GBPUSD','NZDUSD','USDCAD','USDCHF','USDJPY'];
   constructor(public dialogRef: MatDialogRef<FilterSessionInfoComponent>,
      @Inject(MAT_DIALOG_DATA) public data: string)
      { }
