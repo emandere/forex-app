@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { GoogleChartInterface } from 'ng2-google-charts/google-charts-interfaces';
 import { Observable, of } from 'rxjs';
 import * as fromState from '../reducers';
-import { Session, Trade } from '../models/forex-session';
+import { Session, Trade, BalanceHistory } from '../models/forex-session';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap, map, flatMap, take } from 'rxjs/operators';
 import { ForexSessionsService } from '../services/forex-sessions.service';
@@ -175,15 +175,45 @@ export class SessionAnalysisComponent implements OnInit {
                           .Primary
                           .ClosedTrades
                           .filter(x=>x.Pair==pair);
+
+                       
     let balanceHistory =  sessionInfo
                           .SessionUser
                           .Accounts
                           .Primary
+                          .BalanceHistory;
+                          //.map((balance)=>[new Date(balance.Date),balance.Amount]);
+    
+    let balanceHistoryDates =  sessionInfo
+                          .SessionUser
+                          .Accounts
+                          .Primary
                           .BalanceHistory
-                          .map((balance)=>[new Date(balance.Date),balance.Amount]);
+                          .map((balance)=>balance.Date)
+
+    let setDates:Set<string> = new Set<string>(balanceHistoryDates); 
+    let setClosedDates:Set<string> = new Set<string>(trades.map(x=>new Date(x.CloseDate).toISOString().split('T')[0])); 
+    let sortedDates:string[] = Array.from(setDates).sort();
+    let balanceHistoryFilter:any[][] = [];
+    let pairAmount:number = sessionInfo.SessionUser
+                                      .Accounts
+                                      .Primary
+                                      .BalanceHistory[0]
+                                      .Amount;
+   
+
+    for(let date of sortedDates)
+    {
+        if(setClosedDates.has(date))
+        {
+          pairAmount+= trades.filter(x=>x.CloseDate.split('T')[0]==date).map(x=>x.PL).reduce((t,e)=>t+e,0);
+        }
+        
+        balanceHistoryFilter.push([new Date(date),pairAmount]);;
+    }
 
     this.createSharedTradeCharts(trades);
-    this.createBalanceHistoryChart(balanceHistory);
+    this.createBalanceHistoryChart(balanceHistoryFilter);
 
   }
 
