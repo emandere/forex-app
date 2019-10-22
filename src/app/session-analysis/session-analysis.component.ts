@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { switchMap, map, flatMap, take } from 'rxjs/operators';
 import { ForexSessionsService } from '../services/forex-sessions.service';
 import * as liveSessionActions from '../actions/live-sessions.actions';
+import { FilterSession } from '../models/forex-filter-session';
 
 
 
@@ -22,7 +23,8 @@ export class SessionAnalysisComponent implements OnInit {
   liveSession$:Observable<Session>;
   pair$:Observable<string>;
   liveSession:Session;
-  filterPair:string;
+  filterByPair:boolean=false;
+  filtersessionvalue:FilterSession;
   public plHistGoogleChart:     GoogleChartInterface = null;
   public lengthHistGoogleChart:     GoogleChartInterface = null;
   public pLByPairHistogramChart:     GoogleChartInterface = null;
@@ -56,14 +58,33 @@ export class SessionAnalysisComponent implements OnInit {
                 console.log(sess.ExperimentId)
                 this.pair$.subscribe(
                   pair=>{
-                      this.setupCharts(sess,pair)
+                      if(pair=='ALL')
+                        this.filterByPair=false;
+                      else
+                        this.filterByPair=true;
+                      this.setupCharts(sess,pair);
+                      this.setupFilterStats(sess,pair);
                     })
           }
         )
     
   }
 
-
+  setupFilterStats(sess:Session,pair:string)
+  {
+     this.filtersessionvalue ={
+       Id: sess.Id,
+       FilterPair: pair,
+       StartDate: sess.StartDate,
+       CurrentTime: sess.CurrentTime,
+       RealizedPL:sess.RealizedPL,
+       OpenTrades:10,
+       PercentProfitableOpen:10,
+       ClosedTrades:10,
+       PercentProfitableClosed:10,
+       Balance: 10
+     }
+  }
 
   dateDiff(trade:Trade):number
   {

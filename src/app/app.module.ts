@@ -24,6 +24,7 @@ import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
 import { LiveSessionAnalysisComponent } from './live-session-analysis/live-session-analysis.component';
 import { FilterSessionInfoComponent } from './filter-session-info/filter-session-info.component';
+import { FilterSessionStatsComponent } from './filter-session-stats/filter-session-stats.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { FilterSessionInfoComponent } from './filter-session-info/filter-session
     IndicatorsComponent,
     SessionAnalysisComponent,
     LiveSessionAnalysisComponent,
-    FilterSessionInfoComponent
+    FilterSessionInfoComponent,
+    FilterSessionStatsComponent
     
   ],
   imports: [

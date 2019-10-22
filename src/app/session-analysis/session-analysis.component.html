@@ -1,5 +1,7 @@
 <app-live-session-analysis [sessionvalue]="liveSession"></app-live-session-analysis>
 <br/>
+<app-filter-session-stats *ngIf='filterByPair' [filtersessionvalue]="filtersessionvalue"></app-filter-session-stats>
+<br/>
 <mat-card  class="session-card">
   <mat-card-content>
       <google-chart [data]="plHistGoogleChart"></google-chart>
