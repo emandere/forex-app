@@ -72,17 +72,59 @@ export class SessionAnalysisComponent implements OnInit {
 
   setupFilterStats(sess:Session,pair:string)
   {
+    let closedTrades:Trade[] = sess
+                          .SessionUser
+                          .Accounts
+                          .Primary
+                          .ClosedTrades
+                          .filter(x=>x.Pair==pair);
+
+    let openTrades:Trade[] = sess
+                          .SessionUser
+                          .Accounts
+                          .Primary
+                          .Trades
+                          .filter(x=>x.Pair==pair);                   
+    
+    
+    let balanceHistoryDates =  sess
+                          .SessionUser
+                          .Accounts
+                          .Primary
+                          .BalanceHistory
+                          .map((balance)=>balance.Date)
+
+    let setDates:Set<string> = new Set<string>(balanceHistoryDates); 
+    let setClosedDates:Set<string> = new Set<string>(closedTrades.map(x=>new Date(x.CloseDate).toISOString().split('T')[0])); 
+    let sortedDates:string[] = Array.from(setDates).sort();
+    let balanceHistoryFilter:any[][] = [];
+    let pairAmount:number = sess.SessionUser
+                                      .Accounts
+                                      .Primary
+                                      .BalanceHistory[0]
+                                      .Amount;
+   
+
+    for(let date of sortedDates)
+    {
+        if(setClosedDates.has(date))
+        {
+          pairAmount+= closedTrades.filter(x=>x.CloseDate.split('T')[0]==date).map(x=>x.PL).reduce((t,e)=>t+e,0);
+        }
+        
+        balanceHistoryFilter.push([new Date(date),pairAmount]);;
+    }
      this.filtersessionvalue ={
        Id: sess.Id,
        FilterPair: pair,
        StartDate: sess.StartDate,
        CurrentTime: sess.CurrentTime,
        RealizedPL:sess.RealizedPL,
-       OpenTrades:10,
+       OpenTrades:openTrades.length,
        PercentProfitableOpen:10,
-       ClosedTrades:10,
+       ClosedTrades:closedTrades.length,
        PercentProfitableClosed:10,
-       Balance: 10
+       Balance: balanceHistoryFilter[balanceHistoryFilter.length-1][1]
      }
   }
 
