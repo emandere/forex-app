@@ -13,7 +13,7 @@ export class FilterSessionInfoComponent  {
   constructor(public dialogRef: MatDialogRef<FilterSessionInfoComponent>,
      @Inject(MAT_DIALOG_DATA) public data: string)
      { }
-   onNoClick(): void {
+    onNoClick(): void {
       this.dialogRef.close();
     }  
 

@@ -103,10 +103,8 @@ export class SessionAnalysisComponent implements OnInit {
                                       .Primary
                                       .BalanceHistory[0]
                                       .Amount;
-   
 
-    for(let date of sortedDates)
-    {
+    for(let date of sortedDates) {
         if(setClosedDates.has(date))
         {
           pairAmount+= closedTrades.filter(x=>x.CloseDate.split('T')[0]==date).map(x=>x.PL).reduce((t,e)=>t+e,0);
@@ -114,18 +112,25 @@ export class SessionAnalysisComponent implements OnInit {
         
         balanceHistoryFilter.push([new Date(date),pairAmount]);;
     }
-     this.filtersessionvalue ={
-       Id: sess.Id,
-       FilterPair: pair,
-       StartDate: sess.StartDate,
-       CurrentTime: sess.CurrentTime,
-       RealizedPL:sess.RealizedPL,
-       OpenTrades:openTrades.length,
-       PercentProfitableOpen:10,
-       ClosedTrades:closedTrades.length,
-       PercentProfitableClosed:10,
-       Balance: balanceHistoryFilter[balanceHistoryFilter.length-1][1]
-     }
+
+    let profitableOpenTrades = openTrades.filter(x => x.PL > 0).length;
+    let profitableClosedTrades = closedTrades.filter(x => x.PL > 0).length;
+    
+    let percentOpenProfitable:number = openTrades.length==0?0:(profitableOpenTrades/openTrades.length)*100.0;
+    let percentClosedProfitable:number = closedTrades.length==0?0:(profitableClosedTrades/closedTrades.length)*100.0
+
+    this.filtersessionvalue ={
+      Id: sess.Id,
+      FilterPair: pair,
+      StartDate: sess.StartDate,
+      CurrentTime: sess.CurrentTime,
+      RealizedPL:sess.RealizedPL,
+      OpenTrades:openTrades.length,
+      PercentProfitableOpen:percentOpenProfitable,
+      ClosedTrades:closedTrades.length,
+      PercentProfitableClosed:percentClosedProfitable,
+      Balance: balanceHistoryFilter[balanceHistoryFilter.length-1][1]
+    }
   }
 
   dateDiff(trade:Trade):number
