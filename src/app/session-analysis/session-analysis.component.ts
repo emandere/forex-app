@@ -126,10 +126,10 @@ export class SessionAnalysisComponent implements OnInit {
       CurrentTime: sess.CurrentTime,
       RealizedPL:sess.RealizedPL,
       OpenTrades:openTrades.length,
-      PercentProfitableOpen:percentOpenProfitable,
+      PercentProfitableOpen:percentOpenProfitable.toFixed(2),
       ClosedTrades:closedTrades.length,
-      PercentProfitableClosed:percentClosedProfitable,
-      Balance: balanceHistoryFilter[balanceHistoryFilter.length-1][1]
+      PercentProfitableClosed:percentClosedProfitable.toFixed(2),
+      Balance: balanceHistoryFilter[balanceHistoryFilter.length-1][1].toFixed(2)
     }
   }
 

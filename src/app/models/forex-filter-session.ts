@@ -5,8 +5,8 @@ export interface FilterSession {
     CurrentTime:                string;
     RealizedPL:                 number;
     ClosedTrades:               number;
-    PercentProfitableClosed:    number;
+    PercentProfitableClosed:    string;
     OpenTrades:                 number;
-    PercentProfitableOpen:      number;
-    Balance:                    number;
+    PercentProfitableOpen:      string;
+    Balance:                    string;
 }
