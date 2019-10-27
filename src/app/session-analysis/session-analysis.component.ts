@@ -29,6 +29,7 @@ export class SessionAnalysisComponent implements OnInit {
   public lengthHistGoogleChart:     GoogleChartInterface = null;
   public pLByPairHistogramChart:     GoogleChartInterface = null;
   public balanceHistoryChart:     GoogleChartInterface = null;
+  public profitHistoryChart:     GoogleChartInterface = null;
   public countPLByPairChart:     GoogleChartInterface = null;
   constructor(private store: Store<fromState.State>,
               private route: ActivatedRoute,
@@ -192,9 +193,19 @@ export class SessionAnalysisComponent implements OnInit {
                           .Primary
                           .BalanceHistory
                           .map((balance)=>[new Date(balance.Date),balance.Amount]);
+    let balanceHistoryDates =  sessionInfo
+                              .SessionUser
+                              .Accounts
+                              .Primary
+                              .BalanceHistory
+                              .map((balance)=>balance.Date)
+
+    let setDates:Set<string> = new Set<string>(balanceHistoryDates);  
+    let sortedDates:string[] = Array.from(setDates).sort();
 
     this.createSharedTradeCharts(trades);
     this.createBalanceHistoryChart(balanceHistory);
+    this.createProfitHistoryChart(this.createProfitHistoryData(sortedDates,trades));;
     dataPLByPair = this.uniquePairs(trades)
                     .map((pair)=>[pair,this.sumPL(pair,trades)]);
 
@@ -243,14 +254,6 @@ export class SessionAnalysisComponent implements OnInit {
                           .Primary
                           .ClosedTrades
                           .filter(x=>x.Pair==pair);
-
-                       
-    let balanceHistory =  sessionInfo
-                          .SessionUser
-                          .Accounts
-                          .Primary
-                          .BalanceHistory;
-                          //.map((balance)=>[new Date(balance.Date),balance.Amount]);
     
     let balanceHistoryDates =  sessionInfo
                           .SessionUser
@@ -280,8 +283,27 @@ export class SessionAnalysisComponent implements OnInit {
         balanceHistoryFilter.push([new Date(date),pairAmount]);;
     }
 
+    
+
+
+
     this.createSharedTradeCharts(trades);
     this.createBalanceHistoryChart(balanceHistoryFilter);
+    this.createProfitHistoryChart(this.createProfitHistoryData(sortedDates,trades));
+
+  }
+
+  createProfitHistoryData(sortedDates:string[],trades:Trade[]){
+    let profitableHistory:any[][] = [];
+
+    for(let date of sortedDates)
+    {
+        let currtrades = trades.filter(x => new Date(x.CloseDate) < new Date(date));
+        let percentProfitable = (currtrades.filter(x => x.PL > 0).length / currtrades.length) * 100.0
+        
+        profitableHistory.push([new Date(date),percentProfitable]);;
+    }
+    return profitableHistory;
 
   }
 
@@ -341,153 +363,23 @@ export class SessionAnalysisComponent implements OnInit {
         height: 400
       }
     }
-  }
-  
-  
+  } 
 
-  setupChartsFilterOld(sessionInfo:Session,pair:string) {
-    let dataPL:Array<Array<any>>=null;
-    let dataTradeLength:Array<Array<any>>=null;
-    let dataPLByPair:Array<Array<any>>=null;
-    let dataBalanceHistory:Array<Array<any>>=null;
-    let dataCountByPair:Array<Array<any>>=null;
-    let trades:Trade[] = null;
-    if(pair!='ALL')
-    {
-        trades = sessionInfo
-                .SessionUser
-                .Accounts
-                .Primary
-                .ClosedTrades
-                .filter(x => x.Pair==pair)
-    }
-    else
-    {
-      trades = sessionInfo
-              .SessionUser
-              .Accounts
-              .Primary
-              .ClosedTrades
-    }
-    
-    dataPL = trades.map((trade)=>[trade.Pair+trade.OpenDate,trade.PL]);         
-    dataPL.unshift(["Trade","PL"]);
-                
-
-    this.plHistGoogleChart=
-    {
-      chartType:  "Histogram",
-      dataTable:  dataPL,
-      options: 
-      {
-        title:  "Histogram of PL for closed trades",
-        legend: { position: 'none' },
-        hAxis:  {  title:"PL (Dollars)"},
-        vAxis:  { title:"Number of trades"},
-        height: 400
-      }
-    };
-    
-
-    dataTradeLength = trades
-                    .map((trade)=>[trade.Pair+trade.OpenDate,this.dateDiff(trade)]);
-    dataTradeLength.unshift(["Trade","Days"]);
-
-    this.lengthHistGoogleChart=
-    {
-      chartType:  "Histogram",
-      dataTable:  dataTradeLength,
-      options: 
-      {
-        title:  "Duration of trades",
-        legend: { position: 'none' },
-        hAxis:  {  title:"Number of Trades"},
-        vAxis:  { title:"Duration (days)"},
-        height: 400
-      }
-    };
-
-    /*let closedTrades =sessionInfo
-                      .SessionUser
-                      .Accounts
-                      .Primary
-                      .ClosedTrades;*/
-
-    dataPLByPair = this.uniquePairs(trades)
-                    .map((pair)=>[pair,this.sumPL(pair,trades)]);
-
-    dataPLByPair.unshift(["Pair","PL"]);
-
-    this.pLByPairHistogramChart=
-    {
-      chartType:  "Bar",
-      dataTable:  dataPLByPair,
-      options: 
-      {
-        chart: 
-        {
-          title:  "PL vs Pair",
-          legend: { position: 'none' },
-        },
-        bars: 'horizontal',
-        height: 400
-      }
-    };
-
-    dataBalanceHistory = sessionInfo
-                      .SessionUser
-                      .Accounts
-                      .Primary
-                      .BalanceHistory
-                      .map((balance)=>[new Date(balance.Date),balance.Amount]);
-
-    dataBalanceHistory.unshift(["Date","Balance"]);
-    this.balanceHistoryChart =
+  createProfitHistoryChart(profitableHistory:any[][]) {
+    profitableHistory.unshift(["Date","% Profitable"]);
+    this.profitHistoryChart =
     {
       chartType:'Line',
-      dataTable:dataBalanceHistory,
-      
-      options : {
-        chart:
-        {
-          title: "Balance History",
-          legend: { position: 'none' }
-        },
-        hAxis:
-        {
-          title:"Date"
-        }, 
-        series: 
-        {
-          1: {curveType: 'function'}
-        },
-        vAxis:
-        {
-          title:"Balance"
-        },
+      dataTable:profitableHistory,
+      options : 
+      {
+        chart: { title: "% of Profitable Trades", legend: { position: 'none' } },
+        hAxis: { title:"Date" }, 
+        series:{ 1: {curveType: 'function'} },
+        vAxis: { title:"% Profitable"},
         height: 400
       }
     }
-
-    dataCountByPair = this.uniquePairs(trades)
-                    .map((pair)=>[pair,this.countPL(pair,trades)]);
-    dataCountByPair.unshift(["Pair","Count"]);                
-    this.countPLByPairChart=
-    {
-      chartType:  "Bar",
-      dataTable:  dataCountByPair,
-      options: 
-      {
-        chart: 
-        {
-          title:  "Trades by Pair",
-          legend: { position: 'none' },
-        },
-        bars: 'horizontal',
-        height: 400
-      }
-    };
-                
-  }
+  } 
 
 }
