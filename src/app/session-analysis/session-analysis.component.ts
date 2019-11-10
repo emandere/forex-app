@@ -30,6 +30,7 @@ export class SessionAnalysisComponent implements OnInit {
   public pLByPairHistogramChart:     GoogleChartInterface = null;
   public balanceHistoryChart:     GoogleChartInterface = null;
   public profitHistoryChart:     GoogleChartInterface = null;
+  public openTradeHistoryChart:     GoogleChartInterface = null;
   public countPLByPairChart:     GoogleChartInterface = null;
   constructor(private store: Store<fromState.State>,
               private route: ActivatedRoute,
@@ -205,7 +206,8 @@ export class SessionAnalysisComponent implements OnInit {
 
     this.createSharedTradeCharts(trades);
     this.createBalanceHistoryChart(balanceHistory);
-    this.createProfitHistoryChart(this.createProfitHistoryData(sortedDates,trades));;
+    this.createProfitHistoryChart(this.createProfitHistoryData(sortedDates,trades));
+    this.createOpenTradeHistoryChart(this.createOpenTradesHistoryData(sortedDates,trades));
     dataPLByPair = this.uniquePairs(trades)
                     .map((pair)=>[pair,this.sumPL(pair,trades)]);
 
@@ -290,6 +292,7 @@ export class SessionAnalysisComponent implements OnInit {
     this.createSharedTradeCharts(trades);
     this.createBalanceHistoryChart(balanceHistoryFilter);
     this.createProfitHistoryChart(this.createProfitHistoryData(sortedDates,trades));
+    this.createOpenTradeHistoryChart(this.createOpenTradesHistoryData(sortedDates,trades));
 
   }
 
@@ -306,6 +309,21 @@ export class SessionAnalysisComponent implements OnInit {
     return profitableHistory;
 
   }
+
+  createOpenTradesHistoryData(sortedDates:string[],trades:Trade[]){
+    let openTradeHistory:any[][] = [];
+
+    for(let date of sortedDates)
+    {
+        let opentrades = trades.filter(x => new Date(x.OpenDate) <= new Date(date) 
+                                         && new Date(x.CloseDate) > new Date(date));
+        
+        openTradeHistory.push([new Date(date),opentrades.length]);;
+    }
+    return openTradeHistory;
+
+  }
+
 
   createSharedTradeCharts(trades:Trade[]) {
     let dataPL:Array<Array<any>>=null;
@@ -381,5 +399,22 @@ export class SessionAnalysisComponent implements OnInit {
       }
     }
   } 
+
+  createOpenTradeHistoryChart(openTradeHistory:any[][]) {
+    openTradeHistory.unshift(["Date","Open Trades"]);
+    this.openTradeHistoryChart =
+    {
+      chartType:'Line',
+      dataTable:openTradeHistory,
+      options : 
+      {
+        chart: { title: "Open Trades", legend: { position: 'none' } },
+        hAxis: { title:"Date" }, 
+        series:{ 1: {curveType: 'function'} },
+        vAxis: { title:"Open Trades"},
+        height: 400
+      }
+    }
+  }
 
 }
