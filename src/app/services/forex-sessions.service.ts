@@ -6,13 +6,13 @@ import {ForexSessions, Session} from '../models/forex-session';
   providedIn: 'root'
 })
 export class ForexSessionsService {
-  private hostname:string = "desktop-7cd2jf6:124";
+  private hostname:string = "localhost";
   constructor(private http:HttpClient) { }
   getForexSessions() {
-    return this.http.get<ForexSessions>(`http://${this.hostname}/api/forexsession`)
+    return this.http.get<ForexSessions>(`http://${this.hostname}/service/api/forexsession`)
   }
 
   getForexSession(id:string) {
-    return this.http.get<ForexSessions>(`http://${this.hostname}/api/forexsession/${id}`)
+    return this.http.get<ForexSessions>(`http://${this.hostname}/service/api/forexsession/${id}`)
   }
 }
