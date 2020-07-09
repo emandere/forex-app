@@ -23,15 +23,6 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
-    - task: Docker@2
-      displayName: Build an x86 image
-      inputs:
-        command: buildAndPush
-        repository: $(x86ImageName)
-        dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-        containerRegistry: 'dockerhub'
-        tags: |
-          $(tag)
     - task: Bash@3
       inputs:
         targetType: 'inline'
