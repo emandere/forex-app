@@ -32,6 +32,11 @@ stages:
       inputs:
         targetType: 'inline'
         script: 'sudo docker run --rm --privileged multiarch/qemu-user-static:register --reset'
+   
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: 'ls $(System.DefaultWorkingDirectory)'
 
     - task: Bash@3
       inputs:
