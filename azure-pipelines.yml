@@ -36,12 +36,7 @@ stages:
     - task: Bash@3
       inputs:
         targetType: 'inline'
-        script: 'ls $(System.DefaultWorkingDirectory)'
-
-    - task: Bash@3
-      inputs:
-        targetType: 'inline'
-        script: 'sudo cp /usr/bin/qemu-arm-static $(System.DefaultWorkingDirectory)/Forex-App/'
+        script: 'sudo cp /usr/bin/qemu-arm-static $(System.DefaultWorkingDirectory)/'
 
     - task: Docker@2
       displayName: Build an ARM image
