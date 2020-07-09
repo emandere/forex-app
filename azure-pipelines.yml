@@ -21,7 +21,7 @@ stages:
   - job: Build
     displayName: Build
     pool:
-      name: Default
+      vmImage: 'ubuntu-latest'
     steps:
     - task: Docker@2
       displayName: Build an x86 image
@@ -32,6 +32,21 @@ stages:
         containerRegistry: 'dockerhub'
         tags: |
           $(tag)
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: 'sudo apt update && sudo apt install qemu-user-static -y'
+  
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: 'sudo docker run --rm --privileged multiarch/qemu-user-static:register --reset'
+
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: 'sudo cp /usr/bin/qemu-arm-static $(System.DefaultWorkingDirectory)/Forex-App/'
+
     - task: Docker@2
       displayName: Build an ARM image
       inputs:

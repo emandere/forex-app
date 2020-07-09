@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: forex-app
-        image: emandere/forex-app
+        image: emandere/forex-app-{platform}:{buildId}
         ports:
         - containerPort: 80
