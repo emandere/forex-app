@@ -3,6 +3,8 @@ import { interval,Observable } from 'rxjs';
 import { ForexPricesIndicatorService } from '../services/forex-prices-indicator.service';
 import { ForexPricesIndicatorResponse, Strategy } from '../models/forex-prices-indicator';
 import { map } from 'rxjs/operators';
+import { ForexSessionsService } from '../services/forex-sessions.service';
+import { Session, ForexSessions } from '../models/forex-session';
 
 @Component({
   selector: 'app-indicators',
@@ -13,11 +15,16 @@ export class IndicatorsComponent implements OnInit {
   prices$:Observable<ForexPricesIndicatorResponse>=null;
   displayedColumns: string[] = ['Instrument','Ask','Time','Indicator'];
   strategies: Strategy[] =[{value: "RSI"},{value: "BelowBollinger"}];
-  constructor(private forexPricesIndicatorService:ForexPricesIndicatorService) { }
+  constructor(private forexPricesIndicatorService:ForexPricesIndicatorService, private forexSessionService:ForexSessionsService) { }
   strategy:string = "RSI";
+  sessions$: Observable<Session[]>; 
+
 
   ngOnInit() {
     this.setPrices();
+    this.sessions$ = this.forexSessionService.getForexSession("liveSessionRSICSharp").pipe(
+      map(sessions => sessions.sessions )
+    );
     interval(30000).pipe(
       map(t=>this.setPrices()))
     .subscribe()

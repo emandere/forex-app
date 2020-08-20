@@ -38,3 +38,9 @@
     </table>
 </div>
 
+<mat-list>
+    <ng-container *ngFor="let session of (sessions$ | async)">
+      <app-live-session [sessionvalue]="session"></app-live-session>
+    </ng-container>
+</mat-list>
+

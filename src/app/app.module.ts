@@ -46,9 +46,9 @@ import { FilterSessionStatsComponent } from './filter-session-stats/filter-sessi
     BrowserAnimationsModule,
     HttpClientModule,
     RouterModule.forRoot([
-      { path: 'indicators',component: IndicatorsComponent,pathMatch: 'full'},
+      { path: '',component: IndicatorsComponent,pathMatch: 'full'},
       { path: 'session-analysis/:id',component: SessionAnalysisComponent},
-      { path: '', component: LiveSessionsComponent,pathMatch: 'full' }
+      { path: 'sessions', component: LiveSessionsComponent,pathMatch: 'full' }
     ]),
     FormsModule,
     MatToolbarModule,
