@@ -1,0 +1,7 @@
+<div *ngIf='(liveSession$ | async) as session'>
+    <mat-list  >
+        <ng-container *ngFor="let trade of session.SessionUser.Accounts.Primary.ClosedTrades">
+            <app-trade [tradevalue]="trade"></app-trade>
+        </ng-container>
+    </mat-list>
+</div>

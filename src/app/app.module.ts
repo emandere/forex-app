@@ -28,6 +28,8 @@ import { reducers, metaReducers } from './reducers';
 import { LiveSessionAnalysisComponent } from './live-session-analysis/live-session-analysis.component';
 import { FilterSessionInfoComponent } from './filter-session-info/filter-session-info.component';
 import { FilterSessionStatsComponent } from './filter-session-stats/filter-session-stats.component';
+import { TradeComponent } from './trade/trade.component';
+import { TradesComponent } from './trades/trades.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { FilterSessionStatsComponent } from './filter-session-stats/filter-sessi
     SessionAnalysisComponent,
     LiveSessionAnalysisComponent,
     FilterSessionInfoComponent,
-    FilterSessionStatsComponent
+    FilterSessionStatsComponent,
+    TradeComponent,
+    TradesComponent
     
   ],
   imports: [
@@ -48,6 +52,7 @@ import { FilterSessionStatsComponent } from './filter-session-stats/filter-sessi
     RouterModule.forRoot([
       { path: '',component: IndicatorsComponent,pathMatch: 'full'},
       { path: 'session-analysis/:id',component: SessionAnalysisComponent},
+      { path: 'trades/:id',component: TradesComponent},
       { path: 'sessions', component: LiveSessionsComponent,pathMatch: 'full' }
     ]),
     FormsModule,

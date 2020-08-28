@@ -1,0 +1,51 @@
+<br/>
+<mat-card class="livesessioncard">
+    <mat-card-content>
+            <table  style="width:280px; margin-left:50px">
+                <tr>
+                    <td><div class ="sessioninfo">Pair</div></td>
+                    <td></td>
+                    <td><div class ="sessioninfo">PL</div></td>
+                </tr>
+                <tr>
+                    <td><div class ="sessiondetail">{{tradevalue.Pair}}</div></td>
+                    <td></td>
+                    <td><div class ="sessiondetail">{{tradevalue.PL.toFixed(2)}}</div></td>
+                </tr>
+                <tr>
+                    <td><div class ="sessioninfo">Open Date</div></td>
+                    <td></td>
+                    <td><div class ="sessioninfo">Close Date</div></td>
+                </tr>
+                <tr>
+                    <td><div class ="sessiondetail">{{tradevalue.OpenDate}}</div></td>
+                    <td></td>
+                    <td><div class ="sessiondetail">{{tradevalue.CloseDate}}</div></td>
+                </tr>
+                <tr>
+                    <td><div class ="sessioninfo">Stop Loss</div></td>
+                    <td></td>
+                    <td><div class ="sessioninfo">Take Profit</div></td>
+                </tr>
+                <tr>
+                    <td><div class ="sessiondetail">{{tradevalue.StopLoss.toFixed(4)}}</div></td>
+                    <td></td>
+                    <td><div class ="sessiondetail">{{tradevalue.TakeProfit.toFixed(4)}}</div></td>
+                </tr>
+                <tr>
+                    <td><div class ="sessioninfo">Open Price</div></td>
+                    <td></td>
+                    <td><div class ="sessioninfo">Close Price</div></td>
+                </tr>
+                <tr>
+                    <td><div class ="sessiondetail">{{tradevalue.OpenPrice}}</div></td>
+                    <td></td>
+                    <td><div class ="sessiondetail">{{tradevalue.ClosePrice}}</div></td>
+                </tr>
+            </table>
+    </mat-card-content>
+    <mat-card-actions>
+            <button mat-button><div class ="sessiondetail">Analysis</div></button>
+    </mat-card-actions>
+</mat-card>    
+ 
