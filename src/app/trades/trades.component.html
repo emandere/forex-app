@@ -1,6 +1,6 @@
 <div *ngIf='(liveSession$ | async) as session'>
     <mat-list  >
-        <ng-container *ngFor="let trade of session.SessionUser.Accounts.Primary.ClosedTrades.reverse()">
+        <ng-container *ngFor="let trade of session.SessionUser.Accounts.Primary.ClosedTrades.sort(sortDate)">
             <app-trade [tradevalue]="trade"></app-trade>
         </ng-container>
     </mat-list>

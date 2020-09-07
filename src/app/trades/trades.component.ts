@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Session } from '../models/forex-session';
+import { Session, Trade } from '../models/forex-session';
 import { Observable } from 'rxjs';
 import { ForexSessionsService } from '../services/forex-sessions.service';
 import { ActivatedRoute } from '@angular/router';
@@ -18,5 +18,10 @@ export class TradesComponent implements OnInit {
     this.liveSession$=this.forexSessionService.getForexSession(this.route.snapshot.params.id)
                                                .pipe(map(sessions => sessions.sessions[0]))
   }
+
+  sortDate(a:Trade,b:Trade):any {
+    return new Date(b.OpenDate).valueOf() - new Date(a.OpenDate).valueOf(); 
+  }
+
 
 }
