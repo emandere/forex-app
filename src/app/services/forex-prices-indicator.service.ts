@@ -8,9 +8,15 @@ import { ForexPricesIndicatorResponse } from '../models/forex-prices-indicator';
 })
 export class ForexPricesIndicatorService {
   constructor(private http:HttpClient) { }
-  
+  hostname:string = window.location.hostname;
+
   getForexPricesIndicator(indicator:string):Observable<ForexPricesIndicatorResponse>{
-    return this.http.get<ForexPricesIndicatorResponse>(`http://${window.location.hostname}/service/api/forexpricesindicator/${indicator}`);
+    if(this.hostname == "localhost") {
+      return this.http.get<ForexPricesIndicatorResponse>(`http://${window.location.hostname}:5002/api/forexpricesindicator/${indicator}`);
+    } else {
+      return this.http.get<ForexPricesIndicatorResponse>(`http://${window.location.hostname}/service/api/forexpricesindicator/${indicator}`);
+
+    }
   }
 
   
