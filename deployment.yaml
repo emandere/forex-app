@@ -12,7 +12,8 @@ spec:
               backend:
                 service:
                   name: forex
-                  port: 80
+                  port: 
+                    number: 80
 
 ---
 apiVersion: v1
