@@ -50,7 +50,7 @@ stages:
 - stage: Deploy
   jobs:
     # track deployments on the environment
-  - deployment: WSL_Linux
+  - deployment: _Linux
     pool:
       name: LocalWindows
     # creates an environment if it doesn’t exist
@@ -63,19 +63,19 @@ stages:
             - bash: |
                 # Write your commands here
 
-                wsl echo $(releaseTag)
+                 echo $(releaseTag)
 
-                wsl sudo mkdir -p $(DeploymentPath)
+                 sudo mkdir -p $(DeploymentPath)
                 
-                wsl sudo rm -f $(DeploymentPath)/*
+                 sudo rm -f $(DeploymentPath)/*
                 
-                wsl sudo chmod 775 $(DeploymentPath)
+                 sudo chmod 775 $(DeploymentPath)
                 
-                wsl sudo wget -q $(GitHubDeploymentPath) -P  $(DeploymentPath)
+                 sudo wget -q $(GitHubDeploymentPath) -P  $(DeploymentPath)
                 
-                wsl sudo sed -i 's/{platform}/x86/'  $(DeploymentConfigPath)
+                 sudo sed -i 's/{platform}/x86/'  $(DeploymentConfigPath)
                 
-                wsl sudo sed -i 's/{buildId}/$(Build.BuildId)/'  $(DeploymentConfigPath)
+                 sudo sed -i 's/{buildId}/$(Build.BuildId)/'  $(DeploymentConfigPath)
                 
                 
               displayName: 'Set up artifacts'
@@ -83,13 +83,13 @@ stages:
             - bash: |
                 # Write your commands here
             
-                wsl sudo k3s kubectl apply -f  $(DeploymentConfigPath)
+                 sudo k3s kubectl apply -f  $(DeploymentConfigPath)
               
               displayName: 'Deploy Release'
             - bash: |
                 # Write your commands here
           
-                wsl sudo k3s kubectl rollout status deployment.v1.apps/$(serviceName)
+                 sudo k3s kubectl rollout status deployment.v1.apps/$(serviceName)
             
               displayName: 'Verify Release'
 
