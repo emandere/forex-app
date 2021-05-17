@@ -52,7 +52,7 @@ stages:
     # track deployments on the environment
   - deployment: _Linux
     pool:
-      name: LocalWindows
+      name: LocalLinux2
     # creates an environment if it doesn’t exist
     environment: '$(serviceName)'
     strategy:
