@@ -63,19 +63,19 @@ stages:
             - bash: |
                 # Write your commands here
 
-                echo $(releaseTag)
+                wsl echo $(releaseTag)
 
-                sudo mkdir -p $(DeploymentPath)
+                wsl sudo mkdir -p $(DeploymentPath)
                 
-                sudo rm -f $(DeploymentPath)/*
+                wsl sudo rm -f $(DeploymentPath)/*
                 
-                sudo chmod 775 $(DeploymentPath)
+                wsl sudo chmod 775 $(DeploymentPath)
                 
-                sudo wget -q $(GitHubDeploymentPath) -P  $(DeploymentPath)
+                wsl sudo wget -q $(GitHubDeploymentPath) -P  $(DeploymentPath)
                 
-                sudo sed -i 's/{platform}/x86/'  $(DeploymentConfigPath)
+                wsl sudo sed -i 's/{platform}/x86/'  $(DeploymentConfigPath)
                 
-                sudo sed -i 's/{buildId}/$(Build.BuildId)/'  $(DeploymentConfigPath)
+                wsl sudo sed -i 's/{buildId}/$(Build.BuildId)/'  $(DeploymentConfigPath)
                 
                 
               displayName: 'Set up artifacts'
@@ -83,13 +83,13 @@ stages:
             - bash: |
                 # Write your commands here
             
-                sudo k3s kubectl apply -f  $(DeploymentConfigPath)
+                wsl sudo k3s kubectl apply -f  $(DeploymentConfigPath)
               
               displayName: 'Deploy Release'
             - bash: |
                 # Write your commands here
           
-                sudo k3s kubectl rollout status deployment.v1.apps/$(serviceName)
+                wsl sudo k3s kubectl rollout status deployment.v1.apps/$(serviceName)
             
               displayName: 'Verify Release'
 
