@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {ForexSessions, Session} from '../models/forex-session';
 
@@ -10,7 +10,7 @@ export class ForexSessionsService {
 
   constructor(private http:HttpClient) { }
   getForexSessions() {
-    if(this.hostname == 'localhost'){
+    if(isDevMode()){
       return this.http.get<ForexSessions>(`http://${window.location.hostname}:5002/api/forexsession`);
     } else {
       return this.http.get<ForexSessions>(`http://${window.location.hostname}/service/api/forexsession`);
@@ -18,10 +18,10 @@ export class ForexSessionsService {
   }
 
   getForexSession(id:string) {
-    if(this.hostname != 'localhost'){
-      return this.http.get<ForexSessions>(`http://${window.location.hostname}/service/api/forexsession/${id}`);
-    } else {
+    if(isDevMode()){
       return this.http.get<ForexSessions>(`http://${window.location.hostname}:5002/api/forexsession/${id}`);
+    } else {
+      return this.http.get<ForexSessions>(`http://${window.location.hostname}/service/api/forexsession/${id}`);
     }
   }
 }
