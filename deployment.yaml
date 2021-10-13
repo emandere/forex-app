@@ -47,3 +47,5 @@ spec:
         image: emandere/forex-app-{platform}:{buildId}
         ports:
         - containerPort: 80
+      nodeSelector:
+        platform: {platform}
