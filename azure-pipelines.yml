@@ -86,13 +86,13 @@ stages:
             - bash: |
                 # Write your commands here
             
-                 sudo k3s kubectl apply -f  $(DeploymentConfigPath)
+                 kubectl apply -f  $(DeploymentConfigPath)
               
               displayName: 'Deploy Release'
             - bash: |
                 # Write your commands here
           
-                 sudo k3s kubectl rollout status deployment.v1.apps/$(serviceName)
+                 kubectl rollout status deployment.v1.apps/$(serviceName)
             
               displayName: 'Verify Release'
 
