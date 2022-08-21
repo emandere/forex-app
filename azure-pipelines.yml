@@ -68,17 +68,17 @@ stages:
 
                  echo $(releaseTag)
 
-                 sudo mkdir -p $(DeploymentPath)
+                mkdir -p $(DeploymentPath)
                 
-                 sudo rm -f $(DeploymentPath)/*
+                rm -f $(DeploymentPath)/*
                 
-                 sudo chmod 775 $(DeploymentPath)
+                chmod 775 $(DeploymentPath)
                 
-                 sudo wget -q $(GitHubDeploymentPath) -P  $(DeploymentPath)
+                wget -q $(GitHubDeploymentPath) -P  $(DeploymentPath)
                 
-                 sudo sed -i 's/{platform}/x86/'  $(DeploymentConfigPath)
+                gsed -i 's/{platform}/x86/'  $(DeploymentConfigPath)
                 
-                 sudo sed -i 's/{buildId}/$(Build.BuildId)/'  $(DeploymentConfigPath)
+                gsed -i 's/{buildId}/$(Build.BuildId)/'  $(DeploymentConfigPath)
                 
                 
               displayName: 'Set up artifacts'
