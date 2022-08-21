@@ -16,9 +16,9 @@ variables:
   serviceName: 'forex-app'
   x86ImageName: 'emandere/$(serviceName)-x86'
   armImageName: 'emandere/$(serviceName)-arm'
-  DeploymentPath: '/home/emandere/deployments/$(serviceName)/$(releaseTag)'
+  
   GitHubDeploymentPath: 'https://raw.githubusercontent.com/emandere/$(serviceName)/master/deployment.yaml'
-  DeploymentConfigPath: '/home/emandere/deployments/$(serviceName)/$(releaseTag)/deployment.yaml'
+  
 
 stages:
 - stage: Build
@@ -50,11 +50,14 @@ stages:
 - stage: Deploy
   jobs:
     # track deployments on the environment
-  - deployment: _Linux
+  - deployment: MacBook
     pool:
-      name: LocalLinux2
+      name: MacPool
     # creates an environment if it doesn’t exist
     environment: '$(serviceName)'
+    variables:
+      DeploymentPath: '/Users/emandere/deployments/$(serviceName)/$(releaseTag)'
+      DeploymentConfigPath: '/Users/emandere/deployments/$(serviceName)/$(releaseTag)/deployment.yaml'
     strategy:
       # default deployment strategy
       runOnce:
@@ -97,6 +100,9 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     environment: '$(serviceName)'
+    variables:
+      DeploymentPath: '/home/emandere/deployments/$(serviceName)/$(releaseTag)'
+      DeploymentConfigPath: '/home/emandere/deployments/$(serviceName)/$(releaseTag)/deployment.yaml'
     strategy:
       # default deployment strategy
       runOnce:
