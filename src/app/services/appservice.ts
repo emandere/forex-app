@@ -9,7 +9,7 @@ export class AppService {
 
   constructor(private http:HttpClient) { }
   getAppServiceName():string {
-    if(!isDevMode()){
+    if(isDevMode()){
       return `http://${window.location.hostname}:5002`;
     } else {
       let protocol:string = window.location.protocol;
