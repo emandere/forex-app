@@ -77,6 +77,8 @@ stages:
                 wget -q $(GitHubDeploymentPath) -P  $(DeploymentPath)
                 
                 gsed -i 's/{platform}/arm/'  $(DeploymentConfigPath)
+
+                gsed -i "s/{url_host}/"$(url_host_mac)"/"  $(DeploymentConfigPath)
                 
                 gsed -i 's/{buildId}/$(Build.BuildId)/'  $(DeploymentConfigPath)
                 
@@ -122,6 +124,8 @@ stages:
                   wget -q $(GitHubDeploymentPath) -P  $(DeploymentPath)
                   
                   sed -i 's/{platform}/arm/'  $(DeploymentConfigPath)
+
+                  sed -i "s/{url_host}/"$(url_host_prod)"/"  $(DeploymentConfigPath)
                   
                   sed -i 's/{buildId}/$(Build.BuildId)/'  $(DeploymentConfigPath)
             - task: SSH@0
